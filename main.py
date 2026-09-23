@@ -50,16 +50,34 @@ def go(config: DictConfig):
             )
 
         if "basic_cleaning" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            # Clean the downloaded file and load it back in
+            _ = mlflow.run(
+                "src/basic_cleaning",
+                "main",
+                env_manager="conda",
+                parameters={
+                    "input_artifact": "sample.csv:latest",
+                    "output_artifact": "clean_samples.csv",
+                    "output_type": "cleaned_data",
+                    "output_description": "Data that has been cleaned",
+                    "min_price": 10,
+                    "max_price": 350
+                },
+            )
 
         if "data_check" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+                "src/data_check",
+                "main",
+                env_manager="conda",
+                parameters={
+                    "csv": "clean_samples.csv:latest",
+                    "ref": "clean_samples.csv:reference",
+                    "kl_threshold": .2,
+                    "min_price": 10,
+                    "max_price": 350
+                },
+            )
 
         if "data_split" in active_steps:
             ##################
