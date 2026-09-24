@@ -60,8 +60,8 @@ def go(config: DictConfig):
                     "output_artifact": "clean_samples.csv",
                     "output_type": "cleaned_data",
                     "output_description": "Data that has been cleaned",
-                    "min_price": 10,
-                    "max_price": 350
+                    "min_price": config["etl"]["min_price"],
+                    "max_price": config["etl"]["max_price"],
                 },
             )
 
@@ -74,8 +74,8 @@ def go(config: DictConfig):
                     "csv": "clean_samples.csv:latest",
                     "ref": "clean_samples.csv:reference",
                     "kl_threshold": .2,
-                    "min_price": 10,
-                    "max_price": 350
+                    "min_price": config["etl"]["min_price"],
+                    "max_price": config["etl"]["max_price"],
                 },
             )
 
@@ -114,7 +114,7 @@ def go(config: DictConfig):
                     "stratify_by": "neighbourhood_group",
                     "rf_config": rf_config,
                     "max_tfidf_features": "5",
-                    "output_artifact": "random_forest_export",
+                    "output_artifact": "model_export",
 
                 },
             )
